@@ -69,7 +69,7 @@ test_string = input('Give me a string to check: ')
 
 # Iterate through each character and do the tests
 for character in test_string:
-    if character in alphanumbers:
+    if character.lower() in alphanumbers:
         character = 'alphanumeric'
     elif character != '@' and character != '.':
         print("You entered a character not in our alphabet!")
