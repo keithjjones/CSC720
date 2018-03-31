@@ -7,60 +7,51 @@ import ply.yacc as yacc
 from lexer import tokens
 
 
-class Node:
-    def __init__(self, type, children=None, leaf=None):
-        self.type = type
-        if children:
-            self.children = children
-        else:
-            self.children = [ ]
-        self.leaf = leaf
-
-
 precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE'),
+    ('left', 'LPAREN', 'RPAREN'),
 )
 
 
 def p_expression_plus(p):
     'expression : expression PLUS term'
-    p[0] = Node("+", [p[1], p[3]], p[2])
+    p[0] = ("PLUS", p[1], p[3])
 
 
 def p_expression_minus(p):
     'expression : expression MINUS term'
-    p[0] = Node("+", [p[1], p[3]], p[2])
+    p[0] = ("MINUS", p[1], p[3])
 
 
 def p_expression_term(p):
     'expression : term'
-    p[0] = Node("EXPRESSION", [p[1]], "EXPRESSION")
+    p[0] = ("EXPRESSION", p[1])
 
 
 def p_term_times(p):
     'term : term TIMES factor'
-    p[0] = Node("*", [p[1], p[3]], p[2])
+    p[0] = ("TIMES", p[1], p[3])
 
 
 def p_term_div(p):
     'term : term DIVIDE factor'
-    p[0] = Node("/", [p[1], p[3]], p[2])
+    p[0] = ("DIVIDE", p[1], p[3])
 
 
 def p_term_factor(p):
     'term : factor'
-    p[0] = Node("FACTOR", [p[1]], "FACTOR")
+    p[0] = ("FACTOR", p[1])
 
 
 def p_factor_num(p):
     'factor : NUMBER'
-    p[0] = Node("NUMBER", [p[1]], "NUMBER")
+    p[0] = ("NUMBER", p[1])
 
 
 def p_factor_expr(p):
     'factor : LPAREN expression RPAREN'
-    p[0] = Node("PAREN", [p[2]], "PAREN")
+    p[0] = ("PAREN", p[2])
 
 
 # Error rule for syntax errors
@@ -82,19 +73,42 @@ print(type(result))
 
 
 def crawl_ast(node):
-    output_string = ""
-    if type(node) is Node:
-        print("Node: {0}".format(node.leaf))
-        for child in node.children:
-            output_string += crawl_ast(child)
-    else:
-        print("Value: {0}".format(node))
-        output_string = " {0} ".format(str(node))
-    return output_string
+    print("Node: {0}".format(node))
+    results = []
+    # Crawl each branch...
+    for i in range(1, len(node)):
+        if type(node[i]) is tuple:
+            result = crawl_ast(node[i])
+            output = result
+            results.append(result)
+        else:
+            output = node[i]
+
+    # Now do the math...
+    if node[0] == "TIMES":
+        for i in range(1, len(results)):
+            output = results[i-1] * results[i]
+        print("Mult: {0}".format(output))
+    elif node[0] == "DIVIDE":
+        for i in range(1, len(results)):
+            output = results[i-1] / results[i]
+        print("Div: {0}".format(output))
+    elif node[0] == "PLUS":
+        for i in range(1, len(results)):
+            output = results[i-1] + results[i]
+        print("Add: {0}".format(output))
+    elif node[0] == "MINUS":
+        for i in range(1, len(results)):
+            output = results[i-1] - results[i]
+        print("Sub: {0}".format(output))
+
+    print("Output: {0}".format(output))
+    return output
+
+crawl_ast(result)
 
 
-output_string = crawl_ast(result)
-print("Output: {0}".format(output_string))
+# print("Output: {0}".format(output_string))
 
 # while True:
 #    try:
