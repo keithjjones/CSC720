@@ -123,7 +123,7 @@ print('=== Begin LLVM IR')
 print(module)
 print('=== End LLVM IR')
 
-# target = llvm.Target.from_triple(llvm.get_default_triple())
+# target = llvm.Target.from_triple("x86_64-pc-linux-gnu")
 target = llvm.Target.from_default_triple()
 target_machine = target.create_target_machine()
 backing_mod = llvm.parse_assembly("")
