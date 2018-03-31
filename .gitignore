@@ -1,9 +1,6 @@
 # Local files
 .DS_Store
 .idea/
-samples/
-test.py
-malgazer.html
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
