@@ -1,6 +1,7 @@
 # Local files
 .DS_Store
 .idea/
+Class_Project/*.out
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
