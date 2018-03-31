@@ -104,17 +104,6 @@ def crawl_ast(node):
     # print("Output: {0}".format(output))
     return output
 
+
 result = crawl_ast(result)
 print("Calculated Result: {0}".format(result))
-
-
-# print("Output: {0}".format(output_string))
-
-# while True:
-#    try:
-#        s = input('calc > ')
-#    except EOFError:
-#        break
-#    if not s: continue
-#    result = parser.parse(s)
-#    print(result)
