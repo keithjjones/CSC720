@@ -68,12 +68,11 @@ data = '''
 '''
 
 result = parser.parse(data)
-print(result)
-print(type(result))
+print("YACC Results: {0}".format(result))
 
 
 def crawl_ast(node):
-    print("Node: {0}".format(node))
+    # print("Node: {0}".format(node))
     results = []
     # Crawl each branch...
     for i in range(1, len(node)):
@@ -88,24 +87,25 @@ def crawl_ast(node):
     if node[0] == "TIMES":
         for i in range(1, len(results)):
             output = results[i-1] * results[i]
-        print("Mult: {0}".format(output))
+        # print("Mult: {0}".format(output))
     elif node[0] == "DIVIDE":
         for i in range(1, len(results)):
             output = results[i-1] / results[i]
-        print("Div: {0}".format(output))
+        # print("Div: {0}".format(output))
     elif node[0] == "PLUS":
         for i in range(1, len(results)):
             output = results[i-1] + results[i]
-        print("Add: {0}".format(output))
+        # print("Add: {0}".format(output))
     elif node[0] == "MINUS":
         for i in range(1, len(results)):
             output = results[i-1] - results[i]
-        print("Sub: {0}".format(output))
+        # print("Sub: {0}".format(output))
 
-    print("Output: {0}".format(output))
+    # print("Output: {0}".format(output))
     return output
 
-crawl_ast(result)
+result = crawl_ast(result)
+print("Calculated Result: {0}".format(result))
 
 
 # print("Output: {0}".format(output_string))
