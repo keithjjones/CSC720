@@ -19,7 +19,7 @@ t_MINUS = r'-'
 t_TIMES = r'\*'
 t_DIVIDE = r'/'
 t_LPAREN = r'\('
-t_RPAREN = r'\}'
+t_RPAREN = r'\)'
 
 
 def t_NUMBER(t):

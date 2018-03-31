@@ -64,7 +64,7 @@ parser = yacc.yacc()
 
 # Test it out
 data = '''
-3 + 4 * 2
+(3 + 4) * 2
 '''
 
 result = parser.parse(data)
