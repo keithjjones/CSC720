@@ -62,7 +62,7 @@ if input_string.strip() == "":
     input_string = data
 print("Using Data: {0}".format(input_string))
 result = parser.parse(input_string)
-print("YACC Results: {0}".format(result))
+print("YACC/AST Results: {0}".format(result))
 
 
 def crawl_ast(node):
